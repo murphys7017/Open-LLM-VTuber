@@ -75,6 +75,34 @@ class CharacterConfig(I18nMixin):
             raise ValueError(
                 "Persona_prompt cannot be empty. Please provide a persona prompt."
             )
+        def valid_personality_path(path: str) -> str:
+            import os
+            """
+            检查路径是否为真实存在的文件
+            
+            参数:
+                path (str): 需要验证的路径字符串
+            
+            返回:
+                str: 符合条件返回文件内容，不符合返回原内容
+            """
+            # 1. 检查路径是否存在且是文件
+            if not os.path.isfile(path):
+                return path
+            
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    content = f.read().strip()
+                    if not content:
+                        raise ValueError("Personality file is empty")
+                    print("Load Content:{content}")
+                    return content
+            except UnicodeDecodeError:
+                # 尝试备用编码（根据实际需求调整）
+                with open(path, 'r', encoding='gbk', errors='replace') as f:
+                    return f.read().strip()
+        v = valid_personality_path(v)
+        
         return v
 
     @field_validator("character_name")
