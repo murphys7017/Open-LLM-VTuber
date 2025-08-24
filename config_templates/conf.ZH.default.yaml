@@ -48,9 +48,21 @@ character_config:
   #  =================== LLM 后端设置 ===================
 
   agent_config:
-    conversation_agent_choice: 'basic_memory_agent' # 对话代理选择
+    conversation_agent_choice: 'astr_agent' # 对话代理选择
 
     agent_settings:
+      astr_agent:
+        # 通过 WebSocket 连接到 AstrBot 服务的 AI 代理
+        llm_url: 'ws://localhost:8080/ws' # AstrBot 服务的 WebSocket URL
+        # 是否在第一句回应时遇上逗号就直接生成音频以减少首句延迟
+        faster_first_response: True
+        # 句子分割方法：'regex' 或 'pysbd'
+        segment_method: 'pysbd'
+        # 是否使用 MCP（Model Context Protocol）
+        use_mcpp: False
+        # 中断方法：'system' 或 'user'
+        interrupt_method: 'user'
+
       basic_memory_agent:
         # 基础 AI 代理，没什么特别的。
         # 从 llm_config 中选择一个 llm 提供商

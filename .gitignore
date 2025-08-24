@@ -74,3 +74,7 @@ conf.yaml.backup
 tmp/
 private/
 mcp_servers.json
+
+# 自行添加的模型
+vits-zh-hf-fanchen-C
+vits-zh-hf-fanchen-C/
